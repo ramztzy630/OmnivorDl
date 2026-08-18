@@ -432,24 +432,23 @@ resultDownloadBtn.addEventListener(
 
 try {
 
-    const response = await fetch(
-        "http://localhost:3000/api/download",
-        {
-            method: "POST",
+const response = await fetch(
+    "/api/download",
+    {
+        method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-            body: JSON.stringify({
-                url: urlInput.value.trim(),
-                platform: platform,
-                format: format,
-                quality: quality
-            })
-        }
-    );
-
+        body: JSON.stringify({
+            url: urlInput.value.trim(),
+            platform: platform,
+            format: format,
+            quality: quality
+        })
+    }
+);
 
     const data = await response.json();
 
