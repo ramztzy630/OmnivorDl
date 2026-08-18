@@ -40,9 +40,17 @@ async function handleTikTok(mediaUrl, env) {
   const videoUrl = result.video?.playAddr?.[0] || null;
   const musicUrl = result.music?.playUrl?.[0] || null;
 
+  // Kalau link video tidak ditemukan, kembalikan sebagai gagal (bukan sukses palsu)
+  if (!videoUrl) {
+    return {
+      success: false,
+      message: "Video tidak ditemukan. Coba link TikTok lain atau tunggu beberapa saat.",
+    };
+  }
+
   return {
     success: true,
-    message: "Request berhasil diterima.",
+    message: "Video berhasil ditemukan.",
     data: {
       platform: "tiktok",
       title: result.desc || null,
