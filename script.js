@@ -329,6 +329,10 @@ function showResult(platform, url) {
     });
 
 
+    // Sembunyikan link download lama (kalau ada dari request sebelumnya)
+    hideDownloadLink();
+
+
     // Show result
     resultBox.style.display =
         "block";
@@ -463,16 +467,41 @@ const response = await fetch(
     }
 
 
-    showMessage(
-        `${platform} berhasil dikirim ke server.`,
-        "success"
-    );
-
-
     console.log(
         "Response backend:",
         data
     );
+
+
+    // =========================
+    // TAMPILKAN LINK DOWNLOAD
+    // =========================
+
+    if (
+        data.success &&
+        data.data &&
+        data.data.videoUrl
+    ) {
+
+        showDownloadLink(
+            data.data.videoUrl,
+            data.data.title
+        );
+
+        showMessage(
+            `${platform} siap diunduh.`,
+            "success"
+        );
+
+    } else {
+
+        showMessage(
+            data.message ||
+            "Video tidak ditemukan atau link tidak valid.",
+            "error"
+        );
+
+    }
 
 
 } catch (error) {
@@ -499,6 +528,74 @@ const response = await fetch(
 
     }
 );
+
+
+// =========================
+// DOWNLOAD LINK (hasil dari server)
+// =========================
+
+function showDownloadLink(videoUrl, title) {
+
+    let linkBox =
+        document.getElementById("downloadLinkBox");
+
+    if (!linkBox) {
+
+        linkBox =
+            document.createElement("div");
+
+        linkBox.id = "downloadLinkBox";
+
+        linkBox.style.marginTop = "14px";
+        linkBox.style.textAlign = "center";
+
+        document
+            .getElementById("resultDownloadBtn")
+            .after(linkBox);
+
+    }
+
+    linkBox.innerHTML = "";
+
+    const link =
+        document.createElement("a");
+
+    link.href = videoUrl;
+    link.textContent =
+        "⬇ Klik di sini untuk simpan video" +
+        (title ? ` — ${title}` : "");
+
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.download = "";
+
+    link.style.display = "block";
+    link.style.marginTop = "10px";
+    link.style.padding = "12px";
+    link.style.borderRadius = "9px";
+    link.style.background = "#e8f7ec";
+    link.style.border = "1px solid #b7e6c2";
+    link.style.color = "#1a7d3a";
+    link.style.fontWeight = "600";
+    link.style.textDecoration = "none";
+
+    linkBox.appendChild(link);
+
+}
+
+
+function hideDownloadLink() {
+
+    const linkBox =
+        document.getElementById("downloadLinkBox");
+
+    if (linkBox) {
+
+        linkBox.innerHTML = "";
+
+    }
+
+}
 
 
 // =========================
