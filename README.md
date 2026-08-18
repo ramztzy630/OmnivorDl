@@ -1,2 +1,0 @@
-# OmnivorDl
-OmnivorDl Media Downloader
