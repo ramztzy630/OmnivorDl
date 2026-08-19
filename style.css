@@ -833,3 +833,9 @@ input {
     }
 
 }
+.link-icon svg {
+    width: 18px;
+    height: 18px;
+    color: #9aa6b2;
+    display: block;
+}
