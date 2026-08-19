@@ -301,6 +301,11 @@ input {
     color: white;
 }
 
+.tool-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
 .tool-info h3 {
     font-size: 15px;
     color: var(--text);
@@ -950,4 +955,4 @@ input {
         grid-template-columns: 1fr;
     }
 
-    }
+}
