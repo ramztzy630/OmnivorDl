@@ -564,7 +564,7 @@ function showVideoPreview(videoUrl) {
         document.createElement("video");
 
     video.src = videoUrl;
-    video.muted = true;
+    video.muted = false;
     video.playsInline = true;
     video.preload = "metadata";
     video.controls = true;
@@ -791,3 +791,4 @@ function showMessage(
 // =========================
 
 updateInputUI();
+        
