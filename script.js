@@ -546,7 +546,32 @@ const response = await fetch(
 // DOWNLOAD LINK (hasil dari server)
 // =========================
 
+function showVideoPreview(videoUrl) {
+
+    const thumbnail =
+        document.getElementById("thumbnail");
+
+    if (!thumbnail) return;
+
+    thumbnail.innerHTML = "";
+
+    const video =
+        document.createElement("video");
+
+    video.src = videoUrl;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.controls = true;
+
+    thumbnail.appendChild(video);
+
+}
+
+
 function showDownloadLink(videoUrl, title) {
+
+    showVideoPreview(videoUrl);
 
     let linkBox =
         document.getElementById("downloadLinkBox");
@@ -761,3 +786,4 @@ function showMessage(
 // =========================
 
 updateInputUI();
+    
