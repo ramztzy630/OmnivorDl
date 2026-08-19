@@ -470,9 +470,6 @@ function showResult(platform, url) {
     // AUTO RE-FETCH SAAT FORMAT/QUALITY DIGANTI
     // =========================
 
-    const formatSelect =
-        document.getElementById("formatSelect");
-
     const qualitySelect =
         document.getElementById("qualitySelect");
 
