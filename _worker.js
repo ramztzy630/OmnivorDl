@@ -91,23 +91,33 @@ async function handleYoutube(mediaUrl, env, format) {
         quality: "720p",
       };
 
-  const apifyRes = await fetch(apiUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  async function callApify() {
+    const res = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
 
-  if (!apifyRes.ok) {
-    throw new Error(`Apify error: ${apifyRes.status}`);
+    if (!res.ok) {
+      throw new Error(`Apify error: ${res.status}`);
+    }
+
+    const items = await res.json();
+    return items[0];
   }
 
-  const items = await apifyRes.json();
-  const result = items[0];
+  // Percobaan pertama
+  let result = await callApify();
+
+  // Kalau kosong, coba sekali lagi (kadang gangguan sesaat di sisi Apify/YouTube)
+  if (!result || !result.downloadUrl) {
+    result = await callApify();
+  }
 
   if (!result || !result.downloadUrl) {
     return {
       success: false,
-      message: "Video tidak ditemukan. Coba link YouTube lain atau tunggu beberapa saat.",
+      message: "Video tidak ditemukan setelah 2x percobaan. Coba link YouTube lain atau ulangi beberapa saat lagi.",
       debug: { result },
     };
   }
@@ -202,4 +212,3 @@ export default {
     return env.ASSETS.fetch(request);
   },
 };
-                 
