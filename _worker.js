@@ -28,19 +28,20 @@ async function handleTikTok(mediaUrl, env) {
   }
 
   const items = await apifyRes.json();
-  const result = items[0];
+  const wrapper = items[0];
 
-  if (!result) {
+  if (!wrapper) {
     return {
       success: false,
       message: "Video tidak ditemukan atau link tidak valid.",
-      debug: { itemsCount: items.length, itemsRaw: items },
     };
   }
 
-  // Struktur asli actor wilcode/fast-tiktok-downloader-without-watermark:
-  // { type, desc, author: {avatar, nickname}, statistics: {...},
-  //   video: { playAddr: [url] }, music: { playUrl: [url] } }
+  // PENTING: hasil sebenarnya ada satu level lebih dalam, di wrapper.result
+  // (bukan langsung di wrapper). Struktur asli:
+  // { status: "success", result: { type, desc, author, statistics, video, music } }
+  const result = wrapper.result || wrapper;
+
   const videoUrl = result.video?.playAddr?.[0] || null;
   const musicUrl = result.music?.playUrl?.[0] || null;
 
@@ -49,7 +50,7 @@ async function handleTikTok(mediaUrl, env) {
     return {
       success: false,
       message: "Video tidak ditemukan. Coba link TikTok lain atau tunggu beberapa saat.",
-      debug: { result }, // sementara, buat lihat struktur data asli yang diterima Worker
+      debug: { wrapper }, // sementara, buat lihat struktur data asli yang diterima Worker
     };
   }
 
