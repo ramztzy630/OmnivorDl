@@ -7,12 +7,13 @@
 :root {
     --blue: #2196f3;
     --blue-dark: #1478d4;
-    --blue-light: #eaf6ff;
-    --text: #17212b;
-    --muted: #718096;
-    --border: #e2eaf1;
-    --white: #ffffff;
-    --background: #f7fbff;
+    --blue-light: rgba(33, 150, 243, 0.12);
+    --text: #f2ecf1;
+    --muted: #a898a7;
+    --border: rgba(255, 255, 255, 0.09);
+    --panel: rgba(255, 255, 255, 0.04);
+    --white: #151022;
+    --background: #0a0510;
 }
 
 html {
@@ -22,7 +23,7 @@ html {
 body {
     font-family: "Inter", sans-serif;
     color: var(--text);
-    background: var(--white);
+    background: var(--background);
     line-height: 1.6;
 }
 
@@ -48,11 +49,12 @@ input {
 
 .header {
     height: 72px;
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(10, 5, 16, 0.92);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 100;
+    backdrop-filter: blur(8px);
 }
 
 .nav {
@@ -77,7 +79,7 @@ input {
     border-radius: 9px;
     display: grid;
     place-items: center;
-    background: var(--blue);
+    background: linear-gradient(135deg, #4fb3ff, #2196f3);
     color: white;
     font-size: 21px;
     font-weight: 700;
@@ -89,7 +91,7 @@ input {
     gap: 30px;
     font-size: 14px;
     font-weight: 500;
-    color: #536170;
+    color: var(--muted);
 }
 
 .nav-links a {
@@ -104,19 +106,229 @@ input {
     display: none;
     border: 0;
     background: none;
+    color: var(--text);
     font-size: 24px;
     cursor: pointer;
 }
 
 
 /* =========================
-   HERO
+   PORTAL HERO
+========================= */
+
+.portal-hero {
+    position: relative;
+    min-height: 480px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: var(--background);
+}
+
+.portal-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.portal-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+}
+
+.portal-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+        rgba(10, 5, 16, 0.25) 0%,
+        rgba(10, 5, 16, 0.88) 75%,
+        rgba(10, 5, 16, 1) 100%);
+}
+
+.portal-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 50px 0 30px;
+}
+
+.portal-brand {
+    margin-bottom: 24px;
+}
+
+.portal-bolt {
+    font-size: 24px;
+}
+
+.portal-brand h1 {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #4fb3ff, #2196f3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.portal-brand p {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.status-card {
+    background: var(--panel);
+    border: 1px solid rgba(33, 150, 243, 0.3);
+    border-radius: 16px;
+    padding: 18px 20px;
+    backdrop-filter: blur(6px);
+}
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 9px 0;
+}
+
+.status-row + .status-row {
+    border-top: 1px solid var(--border);
+}
+
+.status-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+    min-width: 0;
+}
+
+.status-icon {
+    flex-shrink: 0;
+}
+
+.status-label {
+    color: var(--muted);
+    flex-shrink: 0;
+}
+
+.status-value {
+    margin-left: auto;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-value.status-online {
+    color: #35d17a;
+}
+
+.status-footer {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.access-badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #4fb3ff, #2196f3);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   TOOLS GRID SECTION
+========================= */
+
+.tools-grid-section {
+    background: var(--background);
+    padding: 10px 0 46px;
+}
+
+.tools-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: var(--text);
+}
+
+.tools-heading h2 {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.grid-icon {
+    color: var(--blue);
+    font-size: 16px;
+}
+
+.tool-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border-radius: 14px;
+    background: var(--panel);
+    border: 1px solid rgba(33, 150, 243, 0.22);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    max-width: 480px;
+}
+
+.tool-card:hover {
+    border-color: rgba(33, 150, 243, 0.55);
+    transform: translateY(-2px);
+}
+
+.tool-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    background: linear-gradient(135deg, #4fb3ff, #2196f3);
+    color: white;
+}
+
+.tool-info h3 {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 3px;
+}
+
+.tool-info p {
+    font-size: 11.5px;
+    color: var(--muted);
+}
+
+.tool-cta {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    white-space: nowrap;
+}
+
+
+/* =========================
+   HERO (form download utama)
 ========================= */
 
 .hero {
     background: var(--background);
     border-bottom: 1px solid var(--border);
-    padding: 95px 0 90px;
+    padding: 70px 0 90px;
 }
 
 .hero-content {
@@ -126,10 +338,10 @@ input {
 .badge {
     display: inline-block;
     padding: 7px 13px;
-    border: 1px solid #cfe9fb;
+    border: 1px solid rgba(33, 150, 243, 0.35);
     border-radius: 20px;
     background: var(--blue-light);
-    color: var(--blue-dark);
+    color: #7cc4ff;
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 22px;
@@ -140,6 +352,7 @@ input {
     line-height: 1.08;
     letter-spacing: -2px;
     font-weight: 700;
+    color: var(--text);
 }
 
 .hero h1 span {
@@ -164,10 +377,10 @@ input {
     padding: 7px;
     display: flex;
     gap: 7px;
-    background: white;
+    background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 13px;
-    box-shadow: 0 8px 30px rgba(35, 120, 180, 0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
 .input-wrapper {
@@ -179,8 +392,11 @@ input {
     padding: 0 12px;
 }
 
-.link-icon {
-    font-size: 17px;
+.link-icon svg {
+    width: 18px;
+    height: 18px;
+    color: var(--muted);
+    display: block;
 }
 
 .input-wrapper input {
@@ -193,13 +409,13 @@ input {
 }
 
 .input-wrapper input::placeholder {
-    color: #a3afba;
+    color: #6d6273;
 }
 
 .clear-btn {
     border: 0;
     background: transparent;
-    color: #9aa6b2;
+    color: var(--muted);
     font-size: 22px;
     cursor: pointer;
     display: none;
@@ -232,7 +448,7 @@ input {
 
 .supported-text {
     margin-top: 15px;
-    color: #8b98a5;
+    color: var(--muted);
     font-size: 12px;
 }
 
@@ -262,6 +478,7 @@ input {
     font-size: 30px;
     letter-spacing: -0.8px;
     margin-bottom: 8px;
+    color: var(--text);
 }
 
 .section-heading > p:last-child {
@@ -282,18 +499,19 @@ input {
     padding: 18px 15px;
     border: 1px solid var(--border);
     border-radius: 12px;
-    background: white;
+    background: var(--panel);
     transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .platform-card:hover {
-    border-color: #acdafa;
+    border-color: rgba(33, 150, 243, 0.5);
     transform: translateY(-2px);
 }
 
 .platform-card h3 {
     font-size: 14px;
     margin-bottom: 2px;
+    color: var(--text);
 }
 
 .platform-card p {
@@ -327,7 +545,7 @@ input {
     padding: 45px;
     border: 1px solid var(--border);
     border-radius: 16px;
-    background: var(--background);
+    background: var(--panel);
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
     gap: 60px;
@@ -336,6 +554,7 @@ input {
 .info-card h2 {
     font-size: 30px;
     letter-spacing: -0.8px;
+    color: var(--text);
 }
 
 .info-description {
@@ -367,6 +586,7 @@ input {
 .step h3 {
     font-size: 14px;
     margin-bottom: 2px;
+    color: var(--text);
 }
 
 .step p {
@@ -382,7 +602,7 @@ input {
 .footer {
     border-top: 1px solid var(--border);
     padding: 28px 0;
-    background: white;
+    background: var(--background);
 }
 
 .footer-content {
@@ -413,6 +633,183 @@ input {
 
 
 /* =========================
+   RESULT BOX
+========================= */
+
+.result-box {
+    display: none;
+    max-width: 720px;
+    margin: 18px auto 0;
+    padding: 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    text-align: left;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.result-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+}
+
+.thumbnail {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 9 / 12;
+    max-height: 420px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #050208;
+    display: grid;
+    place-items: center;
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+    overflow: hidden;
+    position: relative;
+}
+
+.thumbnail video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #050208;
+    border-radius: 12px;
+}
+
+.result-info {
+    min-width: 0;
+}
+
+.result-platform {
+    display: inline-block;
+    color: var(--blue);
+    background: var(--blue-light);
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.result-info h3 {
+    font-size: 15px;
+    margin-bottom: 3px;
+    color: var(--text);
+}
+
+.result-info p {
+    color: var(--muted);
+    font-size: 11px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+}
+
+
+/* DOWNLOAD OPTIONS */
+
+.download-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.download-options label {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+}
+
+.download-options select {
+    width: 100%;
+    height: 42px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+    font-size: 12px;
+}
+
+.download-options select:focus {
+    border-color: var(--blue);
+}
+
+.result-download-btn {
+    align-self: end;
+    height: 42px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--blue);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.result-download-btn:hover {
+    background: var(--blue-dark);
+}
+
+.result-download-btn span {
+    margin-left: 5px;
+}
+
+.result-download-btn:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.result-download-btn:disabled span {
+    animation: spin 0.8s linear infinite;
+}
+
+
+/* =========================
+   PROCESSING STATE
+========================= */
+
+.download-btn.loading {
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+.download-btn.loading span {
+    display: inline-block;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
+/* =========================
+   RESULT ANIMATION
+========================= */
+
+.result-box.show {
+    animation: resultAppear 0.3s ease;
+}
+
+@keyframes resultAppear {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* =========================
    MOBILE
 ========================= */
 
@@ -432,11 +829,32 @@ input {
 
     .menu-btn {
         display: block;
-        color: var(--text);
+    }
+
+    .portal-hero {
+        min-height: 420px;
+    }
+
+    .portal-brand h1 {
+        font-size: 24px;
+    }
+
+    .status-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .tool-card {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .tool-cta {
+        margin-left: 62px;
     }
 
     .hero {
-        padding: 65px 0 60px;
+        padding: 55px 0 55px;
     }
 
     .hero h1 {
@@ -497,6 +915,24 @@ input {
         align-items: flex-start;
         gap: 18px;
     }
+
+    .result-preview {
+        align-items: stretch;
+    }
+
+    .thumbnail {
+        max-height: 360px;
+    }
+
+    .download-options {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .result-download-btn {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
 }
 
 
@@ -509,333 +945,9 @@ input {
     .platform-grid {
         grid-template-columns: 1fr;
     }
-}
-/* =========================
-   RESULT BOX
-========================= */
-
-.result-box {
-    display: none;
-    max-width: 720px;
-    margin: 18px auto 0;
-    padding: 18px;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    text-align: left;
-    box-shadow: 0 8px 30px rgba(35, 120, 180, 0.07);
-}
-
-.result-preview {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-}
-
-.thumbnail {
-    width: 115px;
-    height: 75px;
-    flex-shrink: 0;
-    border-radius: 9px;
-    background: var(--blue-light);
-    display: grid;
-    place-items: center;
-    color: var(--blue);
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.result-info {
-    min-width: 0;
-}
-
-.result-platform {
-    display: inline-block;
-    color: var(--blue);
-    background: var(--blue-light);
-    padding: 4px 8px;
-    border-radius: 5px;
-    font-size: 10px;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.result-info h3 {
-    font-size: 15px;
-    margin-bottom: 3px;
-}
-
-.result-info p {
-    color: var(--muted);
-    font-size: 11px;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
-/* DOWNLOAD OPTIONS */
-
-.download-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 10px;
-    margin-top: 18px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-}
-
-.download-options label {
-    display: block;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 5px;
-}
-
-.download-options select {
-    width: 100%;
-    height: 42px;
-    padding: 0 10px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: white;
-    color: var(--text);
-    outline: none;
-    font-size: 12px;
-}
-
-.download-options select:focus {
-    border-color: #8bc9f5;
-}
-
-.result-download-btn {
-    align-self: end;
-    height: 42px;
-    padding: 0 18px;
-    border: 0;
-    border-radius: 8px;
-    background: var(--blue);
-    color: white;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.result-download-btn:hover {
-    background: var(--blue-dark);
-}
-
-.result-download-btn span {
-    margin-left: 5px;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .result-preview {
-        align-items: flex-start;
-    }
-
-    .thumbnail {
-        width: 95px;
-        height: 65px;
-    }
-
-    .download-options {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .result-download-btn {
-        grid-column: 1 / -1;
-        width: 100%;
-    }
-}
-
-@media (max-width: 400px) {
-
-    .result-preview {
-        flex-direction: column;
-    }
-
-    .thumbnail {
-        width: 100%;
-        height: 150px;
-    }
 
     .download-options {
         grid-template-columns: 1fr;
     }
-}
-/* =========================
-   PROCESSING STATE
-========================= */
 
-.download-btn.loading {
-    opacity: 0.75;
-    pointer-events: none;
-}
-
-.download-btn.loading span {
-    display: inline-block;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
     }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* =========================
-   RESULT ANIMATION
-========================= */
-
-.result-box.show {
-    animation: resultAppear 0.3s ease;
-}
-
-@keyframes resultAppear {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* =========================
-   PLATFORM THUMBNAIL
-========================= */
-
-.thumbnail.platform-tiktok {
-    background: #f2f2f2;
-    color: #111;
-}
-
-.thumbnail.platform-instagram {
-    background: #f2f2f2;
-    color: #111;
-}
-
-.thumbnail.platform-facebook {
-    background: #eaf4ff;
-    color: #1877f2;
-}
-
-.thumbnail.platform-pinterest {
-    background: #fff0f2;
-    color: #d60023;
-}
-
-.thumbnail.platform-youtube {
-    background: #fff1f1;
-    color: #ff0000;
-}
-
-
-/* =========================
-   DISABLED DOWNLOAD
-========================= */
-
-.result-download-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-.result-download-btn:disabled {
-    opacity: 0.65;
-    cursor: wait;
-}
-
-.result-download-btn span {
-    display: inline-block;
-}
-
-.result-download-btn:disabled span {
-    animation: spin 0.8s linear infinite;
-}
-
-
-/* =========================
-   VIDEO PREVIEW THUMBNAIL
-========================= */
-
-.thumbnail {
-    overflow: hidden;
-    position: relative;
-}
-
-.thumbnail video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 9px;
-    background: #000;
-}
-
-.thumbnail .play-badge {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    background: rgba(0, 0, 0, 0.15);
-    color: white;
-    font-size: 22px;
-    pointer-events: none;
-}
-
-/* =========================
-   RESULT PREVIEW — FULL WIDTH, TIDAK DI-CROP
-   (override layout lama yang thumbnail kecil di samping)
-========================= */
-
-.result-preview {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-}
-
-.thumbnail {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 9 / 12;
-    max-height: 420px;
-    background: #0b0b0b;
-    border-radius: 12px;
-}
-
-.thumbnail video {
-    object-fit: contain;
-    background: #0b0b0b;
-}
-
-.result-info p {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
-}
-
-@media (max-width: 600px) {
-
-    .thumbnail {
-        max-height: 360px;
-    }
-
-}
-.link-icon svg {
-    width: 18px;
-    height: 18px;
-    color: #9aa6b2;
-    display: block;
-}
