@@ -228,6 +228,97 @@ async function processDownload() {
         <span>↓</span>
     `;
 
+
+    // =========================
+    // LANGSUNG AMBIL PREVIEW VIDEO
+    // (pakai format/quality default, tanpa tunggu klik tombol kedua)
+    // =========================
+
+    const defaultFormat =
+        document.getElementById("formatSelect").value;
+
+    const defaultQuality =
+        document.getElementById("qualitySelect").value;
+
+    fetchAndShowPreview(
+        url,
+        platform,
+        defaultFormat,
+        defaultQuality
+    );
+
+}
+
+
+// =========================
+// FETCH & SHOW PREVIEW (dipanggil otomatis setelah link dikenali)
+// =========================
+
+async function fetchAndShowPreview(url, platform, format, quality) {
+
+    try {
+
+        const response = await fetch(
+            "/api/download",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    url: url,
+                    platform: platform,
+                    format: format,
+                    quality: quality
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Request gagal.");
+        }
+
+        if (
+            data.success &&
+            data.data &&
+            data.data.videoUrl
+        ) {
+
+            showDownloadLink(
+                data.data.videoUrl,
+                data.data.title
+            );
+
+        } else {
+
+            showMessage(
+                data.message ||
+                "Video tidak ditemukan atau link tidak valid.",
+                "error"
+            );
+
+            if (data.debug) {
+                alert(
+                    "DEBUG INFO:\n\n" +
+                    JSON.stringify(data.debug, null, 2)
+                );
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Tidak dapat terhubung ke server.",
+            "error"
+        );
+
+    }
+
 }
 
 
@@ -434,98 +525,12 @@ resultDownloadBtn.addEventListener(
         );
 
 
-try {
-
-const response = await fetch(
-    "/api/download",
-    {
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            url: urlInput.value.trim(),
-            platform: platform,
-            format: format,
-            quality: quality
-        })
-    }
+await fetchAndShowPreview(
+    urlInput.value.trim(),
+    platform,
+    format,
+    quality
 );
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-        throw new Error(
-            data.message ||
-            "Request gagal."
-        );
-
-    }
-
-
-    console.log(
-        "Response backend:",
-        data
-    );
-
-
-    // =========================
-    // TAMPILKAN LINK DOWNLOAD
-    // =========================
-
-    if (
-        data.success &&
-        data.data &&
-        data.data.videoUrl
-    ) {
-
-        showDownloadLink(
-            data.data.videoUrl,
-            data.data.title
-        );
-
-        showMessage(
-            `${platform} siap diunduh.`,
-            "success"
-        );
-
-    } else {
-
-        showMessage(
-            data.message ||
-            "Video tidak ditemukan atau link tidak valid.",
-            "error"
-        );
-
-        // =========================
-        // DEBUG SEMENTARA
-        // =========================
-        if (data.debug) {
-
-            alert(
-                "DEBUG INFO:\n\n" +
-                JSON.stringify(data.debug, null, 2)
-            );
-
-        }
-
-    }
-
-
-} catch (error) {
-
-    console.error(error);
-
-    showMessage(
-        "Tidak dapat terhubung ke server.",
-        "error"
-    );
-
-}
 
 
         // Reset button
@@ -786,4 +791,3 @@ function showMessage(
 // =========================
 
 updateInputUI();
-    
