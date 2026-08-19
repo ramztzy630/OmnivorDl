@@ -256,6 +256,21 @@ async function processDownload() {
 
 async function fetchAndShowPreview(url, platform, format, quality) {
 
+    // Tampilkan loading di thumbnail selagi proses ambil video
+    const thumbnail =
+        document.getElementById("thumbnail");
+
+    if (thumbnail) {
+
+        thumbnail.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;color:#8b98a5;">
+                <span style="font-size:24px;display:inline-block;animation:spin 0.8s linear infinite;">↻</span>
+                <span style="font-size:12px;">Memuat pratinjau video...</span>
+            </div>
+        `;
+
+    }
+
     try {
 
         const response = await fetch(
@@ -293,6 +308,8 @@ async function fetchAndShowPreview(url, platform, format, quality) {
 
         } else {
 
+            resetThumbnailToDefault();
+
             showMessage(
                 data.message ||
                 "Video tidak ditemukan atau link tidak valid.",
@@ -312,12 +329,36 @@ async function fetchAndShowPreview(url, platform, format, quality) {
 
         console.error(error);
 
+        resetThumbnailToDefault();
+
         showMessage(
             "Tidak dapat terhubung ke server.",
             "error"
         );
 
     }
+
+}
+
+
+function resetThumbnailToDefault() {
+
+    const thumbnail =
+        document.getElementById("thumbnail");
+
+    const resultPlatform =
+        document.getElementById("resultPlatform");
+
+    if (!thumbnail) return;
+
+    const platform =
+        resultPlatform ? resultPlatform.textContent : "";
+
+    thumbnail.className =
+        "thumbnail platform-" + platform.toLowerCase();
+
+    thumbnail.innerHTML =
+        `<span>${getPlatformIcon(platform)}</span>`;
 
 }
 
@@ -791,4 +832,4 @@ function showMessage(
 // =========================
 
 updateInputUI();
-        
+            
