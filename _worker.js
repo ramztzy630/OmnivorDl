@@ -74,18 +74,27 @@ async function handleTikTok(mediaUrl, env) {
 // =========================
 // HANDLER: YOUTUBE (via Apify)
 // =========================
-async function handleYoutube(mediaUrl, env) {
+async function handleYoutube(mediaUrl, env, format) {
   const actorId = "scraper_one~yt-downloader";
   const apiUrl = `https://api.apify.com/v2/acts/${actorId}/run-sync-get-dataset-items?token=${env.APIFY_TOKEN}`;
+
+  const isAudio = format === "mp3";
+
+  const body = isAudio
+    ? {
+        videoUrls: [mediaUrl],
+        audioOnly: true,
+        audioBitrate: "128kbps",
+      }
+    : {
+        videoUrls: [mediaUrl],
+        quality: "720p",
+      };
 
   const apifyRes = await fetch(apiUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      videoUrls: [mediaUrl],
-      quality: "720p",
-      format: "mp4",
-    }),
+    body: JSON.stringify(body),
   });
 
   if (!apifyRes.ok) {
@@ -160,7 +169,7 @@ export default {
               break;
 
             case "youtube":
-              result = await handleYoutube(mediaUrl, env);
+              result = await handleYoutube(mediaUrl, env, format);
               break;
 
             /*
@@ -193,3 +202,4 @@ export default {
     return env.ASSETS.fetch(request);
   },
 };
+                 
