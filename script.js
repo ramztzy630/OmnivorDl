@@ -501,6 +501,18 @@ const response = await fetch(
             "error"
         );
 
+        // =========================
+        // DEBUG SEMENTARA
+        // =========================
+        if (data.debug) {
+
+            alert(
+                "DEBUG INFO:\n\n" +
+                JSON.stringify(data.debug, null, 2)
+            );
+
+        }
+
     }
 
 
@@ -724,4 +736,4 @@ function showMessage(
 // =========================
 
 updateInputUI();
-      
+            
