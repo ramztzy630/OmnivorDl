@@ -303,7 +303,8 @@ async function fetchAndShowPreview(url, platform, format, quality) {
 
             showDownloadLink(
                 data.data.videoUrl,
-                data.data.title
+                data.data.title,
+                format
             );
 
         } else {
@@ -465,6 +466,31 @@ function showResult(platform, url) {
     hideDownloadLink();
 
 
+    // =========================
+    // AUTO RE-FETCH SAAT FORMAT/QUALITY DIGANTI
+    // =========================
+
+    const formatSelect =
+        document.getElementById("formatSelect");
+
+    const qualitySelect =
+        document.getElementById("qualitySelect");
+
+    const refetchOnChange = () => {
+
+        fetchAndShowPreview(
+            url,
+            platform,
+            formatSelect.value,
+            qualitySelect.value
+        );
+
+    };
+
+    formatSelect.onchange = refetchOnChange;
+    qualitySelect.onchange = refetchOnChange;
+
+
     // Show result
     resultBox.style.display =
         "block";
@@ -615,7 +641,7 @@ function showVideoPreview(videoUrl) {
 }
 
 
-function showDownloadLink(videoUrl, title) {
+function showDownloadLink(videoUrl, title, format) {
 
     showVideoPreview(videoUrl);
 
@@ -648,7 +674,21 @@ function showDownloadLink(videoUrl, title) {
 
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.download = "";
+
+    // Paksa nama & ekstensi file sesuai format yang dipilih user
+    // (beberapa provider nyimpen file audio-only dengan ekstensi .mp4 di server)
+    const safeTitle =
+        (title || "video")
+            .replace(/[\\/:*?"<>|]/g, "")
+            .slice(0, 60)
+            .trim() || "video";
+
+    const ext =
+        format === "mp3" ? "mp3" :
+        format === "jpg" ? "jpg" :
+        "mp4";
+
+    link.download = `${safeTitle}.${ext}`;
 
     link.style.display = "flex";
     link.style.alignItems = "center";
@@ -832,4 +872,3 @@ function showMessage(
 // =========================
 
 updateInputUI();
-            
