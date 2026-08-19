@@ -573,25 +573,50 @@ function showDownloadLink(videoUrl, title) {
         document.createElement("a");
 
     link.href = videoUrl;
-    link.textContent =
-        "⬇ Klik di sini untuk simpan video" +
-        (title ? ` — ${title}` : "");
+    link.textContent = "⬇ Simpan Video";
 
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.download = "";
 
-    link.style.display = "block";
+    link.style.display = "flex";
+    link.style.alignItems = "center";
+    link.style.justifyContent = "center";
     link.style.marginTop = "10px";
-    link.style.padding = "12px";
+    link.style.padding = "14px";
     link.style.borderRadius = "9px";
-    link.style.background = "#e8f7ec";
-    link.style.border = "1px solid #b7e6c2";
-    link.style.color = "#1a7d3a";
-    link.style.fontWeight = "600";
+    link.style.background = "#1a9d4d";
+    link.style.border = "none";
+    link.style.color = "#ffffff";
+    link.style.fontWeight = "700";
+    link.style.fontSize = "15px";
     link.style.textDecoration = "none";
+    link.style.textAlign = "center";
 
     linkBox.appendChild(link);
+
+
+    // Judul video (kalau ada), ditampilkan terpisah, bukan jadi teks link
+    if (title) {
+
+        const titleText =
+            document.createElement("div");
+
+        titleText.textContent = title;
+
+        titleText.style.marginTop = "8px";
+        titleText.style.fontSize = "12px";
+        titleText.style.color = "#666";
+        titleText.style.textAlign = "center";
+        titleText.style.overflow = "hidden";
+        titleText.style.textOverflow = "ellipsis";
+        titleText.style.display = "-webkit-box";
+        titleText.style.webkitLineClamp = "2";
+        titleText.style.webkitBoxOrient = "vertical";
+
+        linkBox.appendChild(titleText);
+
+    }
 
 }
 
@@ -736,4 +761,3 @@ function showMessage(
 // =========================
 
 updateInputUI();
-            
