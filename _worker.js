@@ -31,7 +31,11 @@ async function handleTikTok(mediaUrl, env) {
   const result = items[0];
 
   if (!result) {
-    return { success: false, message: "Video tidak ditemukan atau link tidak valid." };
+    return {
+      success: false,
+      message: "Video tidak ditemukan atau link tidak valid.",
+      debug: { itemsCount: items.length, itemsRaw: items },
+    };
   }
 
   // Struktur asli actor wilcode/fast-tiktok-downloader-without-watermark:
@@ -45,6 +49,7 @@ async function handleTikTok(mediaUrl, env) {
     return {
       success: false,
       message: "Video tidak ditemukan. Coba link TikTok lain atau tunggu beberapa saat.",
+      debug: { result }, // sementara, buat lihat struktur data asli yang diterima Worker
     };
   }
 
