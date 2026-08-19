@@ -72,6 +72,49 @@ async function handleTikTok(mediaUrl, env) {
 }
 
 // =========================
+// HANDLER: YOUTUBE (via Apify)
+// =========================
+async function handleYoutube(mediaUrl, env) {
+  const actorId = "scraper_one~yt-downloader";
+  const apiUrl = `https://api.apify.com/v2/acts/${actorId}/run-sync-get-dataset-items?token=${env.APIFY_TOKEN}`;
+
+  const apifyRes = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      videoUrls: [mediaUrl],
+      quality: "720p",
+      format: "mp4",
+    }),
+  });
+
+  if (!apifyRes.ok) {
+    throw new Error(`Apify error: ${apifyRes.status}`);
+  }
+
+  const items = await apifyRes.json();
+  const result = items[0];
+
+  if (!result || !result.downloadUrl) {
+    return {
+      success: false,
+      message: "Video tidak ditemukan. Coba link YouTube lain atau tunggu beberapa saat.",
+      debug: { result },
+    };
+  }
+
+  return {
+    success: true,
+    message: "Video berhasil ditemukan.",
+    data: {
+      platform: "youtube",
+      title: result.title || null,
+      videoUrl: result.downloadUrl,
+    },
+  };
+}
+
+// =========================
 // ROUTER UTAMA
 // =========================
 export default {
@@ -116,12 +159,15 @@ export default {
               result = await handleTikTok(mediaUrl, env);
               break;
 
+            case "youtube":
+              result = await handleYoutube(mediaUrl, env);
+              break;
+
             /*
               Platform lain nanti ditambah di sini:
               case "instagram": result = await handleInstagram(mediaUrl, env); break;
               case "facebook": result = await handleFacebook(mediaUrl, env); break;
               case "pinterest": result = await handlePinterest(mediaUrl, env); break;
-              case "youtube": result = await handleYoutube(mediaUrl, env); break;
             */
 
             default:
