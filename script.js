@@ -44,20 +44,24 @@
 // =========================
 
 (function setupMediaDownloaderReveal() {
+(function setupMediaDownloaderReveal() {
 
     const card =
         document.getElementById("mediaDownloaderCard");
 
+    const mainContent =
+        document.querySelector("main");
+
     const heroSection =
         document.getElementById("home");
 
-    if (!card || !heroSection) return;
+    if (!card || !mainContent || !heroSection) return;
 
     card.addEventListener("click", (event) => {
 
         event.preventDefault();
 
-        heroSection.classList.add("reveal");
+        mainContent.classList.add("reveal");
 
         heroSection.scrollIntoView({
             behavior: "smooth",
@@ -67,7 +71,6 @@
     });
 
 })();
-
 
 // =========================
 // MODAL: ABOUT DEV
