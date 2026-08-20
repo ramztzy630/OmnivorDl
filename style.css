@@ -1121,11 +1121,11 @@ input {
    SEMBUNYIKAN FORM DOWNLOAD SAMPAI DIKLIK
 ========================= */
 
-.hero {
+main {
     display: none;
 }
 
-.hero.reveal {
+main.reveal {
     display: block;
 }
 
