@@ -153,9 +153,19 @@ async function handlePinterest(mediaUrl, env) {
   }
 
   const items = await apifyRes.json();
-  const result = items[0];
+  const wrapper = items[0];
 
-  if (!result || result.error || !result.medias || result.medias.length === 0) {
+  if (!wrapper) {
+    return {
+      success: false,
+      message: "Media Pinterest tidak ditemukan atau link tidak valid.",
+    };
+  }
+
+  // Sama seperti actor TikTok: hasil sebenarnya ada satu level lebih dalam
+  const result = wrapper.result || wrapper;
+
+  if (result.error || !result.medias || result.medias.length === 0) {
     return {
       success: false,
       message: "Media Pinterest tidak ditemukan. Coba link lain atau tunggu beberapa saat.",
