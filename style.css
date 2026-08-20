@@ -117,18 +117,26 @@ input {
 ========================= */
 
 .portal-hero {
+.portal-hero {
     position: relative;
-    min-height: 480px;
     display: flex;
-    align-items: flex-end;
-    overflow: hidden;
+    flex-direction: column;
     background: var(--background);
 }
 
 .portal-bg {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.portal-bg .portal-gif {
     position: absolute;
     inset: 0;
-    z-index: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .portal-gif {
@@ -148,10 +156,11 @@ input {
 }
 
 .portal-content {
+    width: 100%;
+    padding: 24px 0 30px;
+    margin-top: -40px;
     position: relative;
     z-index: 1;
-    width: 100%;
-    padding: 50px 0 30px;
 }
 
 .portal-brand {
