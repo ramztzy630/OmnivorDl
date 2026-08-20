@@ -134,6 +134,54 @@ async function handleYoutube(mediaUrl, env, format) {
 }
 
 // =========================
+// HANDLER: PINTEREST (via Apify)
+// =========================
+async function handlePinterest(mediaUrl, env) {
+  const actorId = "easyapi~pinterest-video-downloader";
+  const apiUrl = `https://api.apify.com/v2/acts/${actorId}/run-sync-get-dataset-items?token=${env.APIFY_TOKEN}`;
+
+  const apifyRes = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      url: mediaUrl,
+    }),
+  });
+
+  if (!apifyRes.ok) {
+    throw new Error(`Apify error: ${apifyRes.status}`);
+  }
+
+  const items = await apifyRes.json();
+  const result = items[0];
+
+  if (!result || result.error || !result.medias || result.medias.length === 0) {
+    return {
+      success: false,
+      message: "Media Pinterest tidak ditemukan. Coba link lain atau tunggu beberapa saat.",
+      debug: { result },
+    };
+  }
+
+  // Ambil media kualitas terbaik (item pertama biasanya kualitas tertinggi)
+  const bestMedia = result.medias[0];
+
+  return {
+    success: true,
+    message: "Media berhasil ditemukan.",
+    data: {
+      platform: "pinterest",
+      title: result.title || null,
+      videoUrl: bestMedia.url,
+      thumbnail: result.thumbnail || bestMedia.thumbnail || null,
+      author: result.author || null,
+      resolution: bestMedia.resolution || null,
+      type: bestMedia.type || null,
+    },
+  };
+}
+
+// =========================
 // ROUTER UTAMA
 // =========================
 export default {
@@ -180,6 +228,10 @@ export default {
 
             case "youtube":
               result = await handleYoutube(mediaUrl, env, format);
+              break;
+
+            case "pinterest":
+              result = await handlePinterest(mediaUrl, env);
               break;
 
             /*
