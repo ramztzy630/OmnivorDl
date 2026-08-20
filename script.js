@@ -44,7 +44,6 @@
 // =========================
 
 (function setupMediaDownloaderReveal() {
-(function setupMediaDownloaderReveal() {
 
     const card =
         document.getElementById("mediaDownloaderCard");
