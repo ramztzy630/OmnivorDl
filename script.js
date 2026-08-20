@@ -1,3 +1,109 @@
+// =========================
+// DETEKSI DEVICE & BROWSER (buat status card portal)
+// =========================
+
+(function detectDeviceAndBrowser() {
+
+    const deviceEl =
+        document.getElementById("deviceValue");
+
+    const browserEl =
+        document.getElementById("browserValue");
+
+    if (!deviceEl || !browserEl) return;
+
+    const ua = navigator.userAgent;
+
+    // Device / OS
+    let device = "Unknown";
+
+    if (/android/i.test(ua)) device = "Android";
+    else if (/iphone|ipad|ipod/i.test(ua)) device = "iOS";
+    else if (/windows/i.test(ua)) device = "Windows";
+    else if (/macintosh|mac os/i.test(ua)) device = "macOS";
+    else if (/linux/i.test(ua)) device = "Linux";
+
+    deviceEl.textContent = device;
+
+    // Browser
+    let browser = "Unknown";
+
+    if (/edg/i.test(ua)) browser = "Edge";
+    else if (/opr|opera/i.test(ua)) browser = "Opera";
+    else if (/chrome/i.test(ua) && !/edg/i.test(ua)) browser = "Chrome";
+    else if (/firefox/i.test(ua)) browser = "Firefox";
+    else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = "Safari";
+
+    browserEl.textContent = browser;
+
+})();
+
+
+// =========================
+// REVEAL FORM DOWNLOAD SAAT KARTU "MEDIA DOWNLOADER" DIKLIK
+// =========================
+
+(function setupMediaDownloaderReveal() {
+
+    const card =
+        document.getElementById("mediaDownloaderCard");
+
+    const heroSection =
+        document.getElementById("home");
+
+    if (!card || !heroSection) return;
+
+    card.addEventListener("click", (event) => {
+
+        event.preventDefault();
+
+        heroSection.classList.add("reveal");
+
+        heroSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    });
+
+})();
+
+
+// =========================
+// MODAL: ABOUT DEV
+// =========================
+
+(function setupAboutDevModal() {
+
+    const link =
+        document.getElementById("aboutDevLink");
+
+    const modal =
+        document.getElementById("aboutDevModal");
+
+    const closeBtn =
+        document.getElementById("closeAboutDev");
+
+    if (!link || !modal || !closeBtn) return;
+
+    link.addEventListener("click", (event) => {
+        event.preventDefault();
+        modal.classList.add("show");
+    });
+
+    closeBtn.addEventListener("click", () => {
+        modal.classList.remove("show");
+    });
+
+    modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.classList.remove("show");
+        }
+    });
+
+})();
+
+
 const urlInput = document.getElementById("urlInput");
 const downloadBtn = document.getElementById("downloadBtn");
 const clearBtn = document.getElementById("clearBtn");
@@ -869,3 +975,4 @@ function showMessage(
 // =========================
 
 updateInputUI();
+            
