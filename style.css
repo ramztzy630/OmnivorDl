@@ -131,7 +131,7 @@ input {
     z-index: 0;
 }
 
-.portal-bg .portal-gif {
+.portal-bg {
     position: absolute;
     inset: 0;
     width: 100%;
