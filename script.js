@@ -48,19 +48,16 @@
     const card =
         document.getElementById("mediaDownloaderCard");
 
-    const mainContent =
-        document.querySelector("main");
-
     const heroSection =
         document.getElementById("home");
 
-    if (!card || !mainContent || !heroSection) return;
+    if (!card || !heroSection) return;
 
     card.addEventListener("click", (event) => {
 
         event.preventDefault();
 
-        mainContent.classList.add("reveal");
+        heroSection.classList.add("reveal");
 
         heroSection.scrollIntoView({
             behavior: "smooth",
@@ -70,6 +67,7 @@
     });
 
 })();
+
 
 // =========================
 // MODAL: ABOUT DEV
@@ -400,7 +398,24 @@ async function fetchAndShowPreview(url, platform, format, quality) {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || "Request gagal.");
+
+            resetThumbnailToDefault();
+
+            showMessage(
+                data.message ||
+                "Request gagal.",
+                "error"
+            );
+
+            if (data.error) {
+                alert(
+                    "ERROR DETAIL:\n\n" +
+                    data.error
+                );
+            }
+
+            return;
+
         }
 
         if (
@@ -977,4 +992,4 @@ function showMessage(
 // =========================
 
 updateInputUI();
-            
+        
