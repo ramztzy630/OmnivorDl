@@ -137,14 +137,28 @@ async function handleYoutube(mediaUrl, env, format) {
 // HANDLER: PINTEREST (via Apify)
 // =========================
 async function handlePinterest(mediaUrl, env) {
-  const actorId = "easyapi~pinterest-video-downloader";
+  const actorId = "igview-owner~pinterest-downloader-api";
   const apiUrl = `https://api.apify.com/v2/acts/${actorId}/run-sync-get-dataset-items?token=${env.APIFY_TOKEN}`;
+
+  // Resolve link pendek (pin.it) jadi link panjang
+  let resolvedUrl = mediaUrl;
+
+  if (mediaUrl.includes("pin.it")) {
+    const redirectRes = await fetch(mediaUrl, { redirect: "follow" });
+    resolvedUrl = redirectRes.url;
+  }
+
+  // Bersihkan subdomain negara (id., jp., es., dll) jadi www. biasa
+  resolvedUrl = resolvedUrl.replace(
+    /^https?:\/\/[a-z]{2}\.pinterest\./i,
+    "https://www.pinterest."
+  );
 
   const apifyRes = await fetch(apiUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      url: mediaUrl,
+      pin_urls: [resolvedUrl],
     }),
   });
 
@@ -162,10 +176,10 @@ async function handlePinterest(mediaUrl, env) {
     };
   }
 
-  // Sama seperti actor TikTok: hasil sebenarnya ada satu level lebih dalam
+  // Beberapa actor Apify membungkus hasil satu level lebih dalam (result.result)
   const result = wrapper.result || wrapper;
 
-  if (result.error || !result.medias || result.medias.length === 0) {
+  if (!result.url) {
     return {
       success: false,
       message: "Media Pinterest tidak ditemukan. Coba link lain atau tunggu beberapa saat.",
@@ -173,20 +187,16 @@ async function handlePinterest(mediaUrl, env) {
     };
   }
 
-  // Ambil media kualitas terbaik (item pertama biasanya kualitas tertinggi)
-  const bestMedia = result.medias[0];
-
   return {
     success: true,
     message: "Media berhasil ditemukan.",
     data: {
       platform: "pinterest",
       title: result.title || null,
-      videoUrl: bestMedia.url,
-      thumbnail: result.thumbnail || bestMedia.thumbnail || null,
-      author: result.author || null,
-      resolution: bestMedia.resolution || null,
-      type: bestMedia.type || null,
+      videoUrl: result.url,
+      thumbnail: result.thumbnail || null,
+      width: result.width || null,
+      height: result.height || null,
     },
   };
 }
