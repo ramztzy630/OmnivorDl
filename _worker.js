@@ -140,33 +140,35 @@ async function handlePinterest(mediaUrl, env) {
   const actorId = "igview-owner~pinterest-downloader-api";
   const apiUrl = `https://api.apify.com/v2/acts/${actorId}/run-sync-get-dataset-items?token=${env.APIFY_TOKEN}`;
 
-  // Resolve link pendek (pin.it) jadi link panjang
+  // Resolve link pendek (pin.it) jadi link panjang.
+  // Rantai redirect-nya bisa 2+ hop: pin.it -> api.pinterest.com/url_shortener/... -> pinterest.com/pin/...
   let resolvedUrl = mediaUrl;
 
   if (mediaUrl.includes("pin.it")) {
 
-    // Coba 1: baca header redirect manual (Location)
-    const manualRes = await fetch(mediaUrl, { redirect: "manual" });
-    const location = manualRes.headers.get("location");
+    let currentUrl = mediaUrl;
+    const maxHops = 5;
 
-    if (location && location.includes("pinterest.")) {
-      resolvedUrl = location;
-    } else {
-      // Coba 2: pin.it kadang pakai redirect via halaman HTML (bukan header),
-      // jadi cari link pinterest.com/pin/... di dalam isi HTML-nya
-      const pageRes = await fetch(mediaUrl, { redirect: "follow" });
-      const html = await pageRes.text();
+    for (let i = 0; i < maxHops; i++) {
 
-      const match = html.match(
-        /https:\/\/[a-z.]*pinterest\.[a-z]{2,}\/pin\/[0-9]+\/?/i
-      );
+      const manualRes = await fetch(currentUrl, { redirect: "manual" });
+      const location = manualRes.headers.get("location");
 
-      if (match) {
-        resolvedUrl = match[0];
-      } else if (pageRes.url && pageRes.url.includes("pinterest.")) {
-        resolvedUrl = pageRes.url;
+      // Sudah sampai di halaman pin asli (bukan redirect lagi)
+      if (!location) {
+        break;
       }
+
+      currentUrl = location;
+
+      // Kalau sudah dapat format pin yang benar, berhenti
+      if (/pinterest\.[a-z]{2,}\/pin\//i.test(currentUrl)) {
+        break;
+      }
+
     }
+
+    resolvedUrl = currentUrl;
 
   }
 
