@@ -144,8 +144,30 @@ async function handlePinterest(mediaUrl, env) {
   let resolvedUrl = mediaUrl;
 
   if (mediaUrl.includes("pin.it")) {
-    const redirectRes = await fetch(mediaUrl, { redirect: "follow" });
-    resolvedUrl = redirectRes.url;
+
+    // Coba 1: baca header redirect manual (Location)
+    const manualRes = await fetch(mediaUrl, { redirect: "manual" });
+    const location = manualRes.headers.get("location");
+
+    if (location && location.includes("pinterest.")) {
+      resolvedUrl = location;
+    } else {
+      // Coba 2: pin.it kadang pakai redirect via halaman HTML (bukan header),
+      // jadi cari link pinterest.com/pin/... di dalam isi HTML-nya
+      const pageRes = await fetch(mediaUrl, { redirect: "follow" });
+      const html = await pageRes.text();
+
+      const match = html.match(
+        /https:\/\/[a-z.]*pinterest\.[a-z]{2,}\/pin\/[0-9]+\/?/i
+      );
+
+      if (match) {
+        resolvedUrl = match[0];
+      } else if (pageRes.url && pageRes.url.includes("pinterest.")) {
+        resolvedUrl = pageRes.url;
+      }
+    }
+
   }
 
   // Bersihkan subdomain negara (id., jp., es., dll) jadi www. biasa
@@ -163,7 +185,8 @@ async function handlePinterest(mediaUrl, env) {
   });
 
   if (!apifyRes.ok) {
-    throw new Error(`Apify error: ${apifyRes.status}`);
+    const errBody = await apifyRes.text();
+    throw new Error(`Apify error: ${apifyRes.status} | resolvedUrl: ${resolvedUrl} | ${errBody.slice(0, 200)}`);
   }
 
   const items = await apifyRes.json();
