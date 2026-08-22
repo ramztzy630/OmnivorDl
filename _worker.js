@@ -178,24 +178,6 @@ async function handlePinterest(mediaUrl, env) {
     "https://www.pinterest."
   );
 
-  // Buang embel-embel di belakang ID pin (misal /sent/?invite_code=...),
-  // sisain cuma https://www.pinterest.com/pin/ID/
-  const pinIdMatch = resolvedUrl.match(
-    /(https?:\/\/(?:www\.)?pinterest\.[a-z]{2,}\/pin\/[0-9]+)/i
-  );
-
-  if (pinIdMatch) {
-    resolvedUrl = pinIdMatch[1] + "/";
-  }
-
-  // Bersihkan URL jadi hanya https://www.pinterest.com/pin/<ID>/
-  // (buang embel-embel seperti /sent/, query string invite_code, dll)
-  const pinIdMatch = resolvedUrl.match(/\/pin\/(\d+)/);
-
-  if (pinIdMatch) {
-    resolvedUrl = `https://www.pinterest.com/pin/${pinIdMatch[1]}/`;
-  }
-
   // Ambil HANYA angka ID pin-nya, buang semua embel-embel di belakang
   // (kadang ada /sent/?invite_code=...&sender=... setelah redirect pin.it)
   const pinIdMatch = resolvedUrl.match(/\/pin\/(\d+)/);
