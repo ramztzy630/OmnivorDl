@@ -814,7 +814,6 @@ function showDownloadLink(videoUrl, title, format) {
         document.createElement("a");
 
     link.href = videoUrl;
-    link.textContent = "⬇ Simpan Video";
 
     link.target = "_blank";
     link.rel = "noopener noreferrer";
@@ -836,45 +835,11 @@ function showDownloadLink(videoUrl, title, format) {
 
     link.download = fileName;
 
-    // Untuk gambar: coba paksa download beneran (browser sering cuma buka
-    // gambar cross-origin di tab baru, bukan download langsung)
     const isImageFile = ext === "jpg";
 
-    if (isImageFile) {
-
-        link.addEventListener("click", async (event) => {
-
-            event.preventDefault();
-
-            try {
-
-                const fileRes = await fetch(videoUrl);
-                const blob = await fileRes.blob();
-                const blobUrl = URL.createObjectURL(blob);
-
-                const tempLink =
-                    document.createElement("a");
-
-                tempLink.href = blobUrl;
-                tempLink.download = fileName;
-
-                document.body.appendChild(tempLink);
-                tempLink.click();
-                document.body.removeChild(tempLink);
-
-                URL.revokeObjectURL(blobUrl);
-
-            } catch (error) {
-
-                console.error("Gagal force-download, buka tab baru:", error);
-
-                window.open(videoUrl, "_blank");
-
-            }
-
-        });
-
-    }
+    link.textContent = isImageFile
+        ? "🔗 Buka Gambar (lalu tekan-tahan untuk simpan)"
+        : "⬇ Simpan Video";
 
     link.style.display = "flex";
     link.style.alignItems = "center";
@@ -891,6 +856,24 @@ function showDownloadLink(videoUrl, title, format) {
     link.style.textAlign = "center";
 
     linkBox.appendChild(link);
+
+
+    if (ext === "jpg") {
+
+        const hint =
+            document.createElement("div");
+
+        hint.textContent =
+            "Tips: setelah gambar terbuka, tekan & tahan gambarnya untuk memilih \"Simpan gambar\".";
+
+        hint.style.marginTop = "8px";
+        hint.style.fontSize = "11px";
+        hint.style.color = "#8b98a5";
+        hint.style.textAlign = "center";
+
+        linkBox.appendChild(hint);
+
+    }
 
 
     // Judul video (kalau ada), ditampilkan terpisah, bukan jadi teks link
@@ -1021,10 +1004,12 @@ function showMessage(
             "1px solid #ccecff";
 
         messageBox.style.color =
-           "#1478d4";
-   }
+            "#1478d4";
 
-        messageBox.textContent =
+    }
+
+
+    messageBox.textContent =
         message;
 
 
