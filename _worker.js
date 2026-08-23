@@ -216,7 +216,7 @@ async function handlePinterest(mediaUrl, env) {
     return {
       success: false,
       message: "Media Pinterest tidak ditemukan. Coba link lain atau tunggu beberapa saat.",
-      debug: { result },
+      debug: { resolvedUrl, result },
     };
   }
 
