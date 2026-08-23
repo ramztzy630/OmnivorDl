@@ -750,6 +750,27 @@ function showVideoPreview(videoUrl) {
 
     thumbnail.innerHTML = "";
 
+    // Deteksi apakah ini gambar (Pinterest kadang ngasih JPG, bukan video)
+    const isImage =
+        /\.(jpe?g|png|webp|gif)(\?|$)/i.test(videoUrl);
+
+    if (isImage) {
+
+        const img =
+            document.createElement("img");
+
+        img.src = videoUrl;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "contain";
+        img.style.background = "#050208";
+
+        thumbnail.appendChild(img);
+
+        return;
+
+    }
+
     const video =
         document.createElement("video");
 
@@ -995,4 +1016,4 @@ function showMessage(
 // =========================
 
 updateInputUI();
-    
+            
