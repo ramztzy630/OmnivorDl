@@ -190,6 +190,7 @@ async function handlePinterest(mediaUrl, env) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
+      pin_enabled: true,
       pin_urls: [resolvedUrl],
     }),
   });
@@ -317,3 +318,4 @@ export default {
     return env.ASSETS.fetch(request);
   },
 };
+      
