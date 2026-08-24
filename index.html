@@ -35,7 +35,7 @@
 
 
     <!-- ========================= -->
-    <!-- PORTAL HERO (baru)         -->
+    <!-- PORTAL HERO                -->
     <!-- ========================= -->
     <section class="portal-hero">
 
@@ -53,7 +53,7 @@
 
         <div class="container portal-content">
 
-            <!-- MENU INFORMASI (menimpa posisi judul lama) -->
+            <!-- MENU INFORMASI -->
             <div class="info-bar-inner">
 
                 <div class="info-bar-left">
@@ -88,7 +88,7 @@
 
                 <div class="status-row">
 
-                                        <div class="status-item">
+                    <div class="status-item">
                         <span class="status-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
@@ -104,7 +104,6 @@
                         </span>
                     </div>
 
-
                     <div class="status-item">
                         <span class="status-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -113,7 +112,7 @@
                             </svg>
                         </span>
                         <span class="status-label">Device</span>
-                        <span class="status-value">Android</span>
+                        <span class="status-value" id="deviceValue">...</span>
                     </div>
 
                 </div>
@@ -152,12 +151,13 @@
 
             </div>
 
+        </div>
 
     </section>
 
 
     <!-- ========================= -->
-    <!-- TOOLS GRID (baru)          -->
+    <!-- TOOLS GRID                 -->
     <!-- ========================= -->
     <section class="tools-grid-section">
 
@@ -187,7 +187,7 @@
 
             </a>
 
-                  <a href="#fakechat" class="tool-card" id="fakeChatCard" style="margin-top: 14px;">
+            <a href="#fakechat" class="tool-card" id="fakeChatCard" style="margin-top: 14px;">
 
                 <div class="tool-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -210,7 +210,7 @@
 
 
     <!-- ========================= -->
-    <!-- MODAL: ABOUT DEV (baru)    -->
+    <!-- MODAL: ABOUT DEV           -->
     <!-- ========================= -->
     <div class="modal-overlay" id="aboutDevModal">
 
@@ -239,11 +239,9 @@
     </div>
 
 
-
-
-
-
-    <!-- HERO -->
+    <!-- ========================= -->
+    <!-- MEDIA DOWNLOADER (form)    -->
+    <!-- ========================= -->
     <main>
 
         <section class="hero" id="home">
@@ -264,17 +262,16 @@
                     Fast, simple, and easy to use.
                 </p>
 
-
                 <!-- DOWNLOAD BOX -->
                 <div class="download-box">
 
                     <div class="input-wrapper">
                         <span class="link-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-    </svg>
-</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                            </svg>
+                        </span>
 
                         <input
                             type="url"
@@ -294,71 +291,59 @@
                     </button>
 
                 </div>
-<!-- RESULT -->
-<div class="result-box" id="resultBox">
 
-    <div class="result-preview">
-        <div class="thumbnail" id="thumbnail">
-            <span>Preview</span>
-        </div>
+                <!-- RESULT -->
+                <div class="result-box" id="resultBox">
 
-        <div class="result-info">
-            <span class="result-platform" id="resultPlatform">
-                Platform
-            </span>
+                    <div class="result-preview">
+                        <div class="thumbnail" id="thumbnail">
+                            <span>Preview</span>
+                        </div>
 
-            <h3 id="resultTitle">
-                Media detected
-            </h3>
+                        <div class="result-info">
+                            <span class="result-platform" id="resultPlatform">
+                                Platform
+                            </span>
 
-            <p id="resultUrl">
-                Your media link is ready.
-            </p>
-        </div>
-    </div>
+                            <h3 id="resultTitle">
+                                Media detected
+                            </h3>
 
+                            <p id="resultUrl">
+                                Your media link is ready.
+                            </p>
+                        </div>
+                    </div>
 
-    <div class="download-options">
+                    <div class="download-options">
 
-        <div class="format-group">
+                        <div class="format-group">
+                            <label for="formatSelect">Format</label>
+                            <select id="formatSelect">
+                                <option value="mp4">MP4</option>
+                                <option value="mp3">MP3</option>
+                                <option value="jpg">JPG</option>
+                            </select>
+                        </div>
 
-            <label for="formatSelect">
-                Format
-            </label>
+                        <div class="quality-group">
+                            <label for="qualitySelect">Quality</label>
+                            <select id="qualitySelect">
+                                <option value="1080">1080p</option>
+                                <option value="720">720p</option>
+                                <option value="480">480p</option>
+                                <option value="360">360p</option>
+                            </select>
+                        </div>
 
-            <select id="formatSelect">
-                <option value="mp4">MP4</option>
-                <option value="mp3">MP3</option>
-                <option value="jpg">JPG</option>
-            </select>
+                        <button class="result-download-btn" id="resultDownloadBtn">
+                            Download
+                            <span>↓</span>
+                        </button>
 
-        </div>
+                    </div>
 
-
-        <div class="quality-group">
-
-            <label for="qualitySelect">
-                Quality
-            </label>
-
-            <select id="qualitySelect">
-                <option value="1080">1080p</option>
-                <option value="720">720p</option>
-                <option value="480">480p</option>
-                <option value="360">360p</option>
-            </select>
-
-        </div>
-
-
-        <button class="result-download-btn" id="resultDownloadBtn">
-            Download
-            <span>↓</span>
-        </button>
-
-    </div>
-
-</div>
+                </div>
 
                 <p class="supported-text">
                     Supports TikTok, Instagram, Facebook, Pinterest & YouTube
@@ -368,7 +353,6 @@
 
         </section>
 
-
         <!-- PLATFORMS -->
         <section class="platform-section" id="platforms">
 
@@ -376,76 +360,35 @@
 
                 <div class="section-heading">
                     <p class="section-label">SUPPORTED PLATFORMS</p>
-
-                    <h2>
-                        One place for your media
-                    </h2>
-
-                    <p>
-                        Choose a platform or simply paste its link above.
-                    </p>
+                    <h2>One place for your media</h2>
+                    <p>Choose a platform or simply paste its link above.</p>
                 </div>
-
 
                 <div class="platform-grid">
 
                     <div class="platform-card">
-                        <div class="platform-icon tiktok">
-                            ♪
-                        </div>
-
-                        <div>
-                            <h3>TikTok</h3>
-                            <p>Videos</p>
-                        </div>
+                        <div class="platform-icon tiktok">♪</div>
+                        <div><h3>TikTok</h3><p>Videos</p></div>
                     </div>
 
-
                     <div class="platform-card">
-                        <div class="platform-icon instagram">
-                            ◎
-                        </div>
-
-                        <div>
-                            <h3>Instagram</h3>
-                            <p>Posts & Reels</p>
-                        </div>
+                        <div class="platform-icon instagram">◎</div>
+                        <div><h3>Instagram</h3><p>Posts & Reels</p></div>
                     </div>
 
-
                     <div class="platform-card">
-                        <div class="platform-icon facebook">
-                            f
-                        </div>
-
-                        <div>
-                            <h3>Facebook</h3>
-                            <p>Public media</p>
-                        </div>
+                        <div class="platform-icon facebook">f</div>
+                        <div><h3>Facebook</h3><p>Public media</p></div>
                     </div>
 
-
                     <div class="platform-card">
-                        <div class="platform-icon pinterest">
-                            P
-                        </div>
-
-                        <div>
-                            <h3>Pinterest</h3>
-                            <p>Images & videos</p>
-                        </div>
+                        <div class="platform-icon pinterest">P</div>
+                        <div><h3>Pinterest</h3><p>Images & videos</p></div>
                     </div>
 
-
                     <div class="platform-card">
-                        <div class="platform-icon youtube">
-                            ▶
-                        </div>
-
-                        <div>
-                            <h3>YouTube</h3>
-                            <p>Supported links</p>
-                        </div>
+                        <div class="platform-icon youtube">▶</div>
+                        <div><h3>YouTube</h3><p>Supported links</p></div>
                     </div>
 
                 </div>
@@ -453,7 +396,6 @@
             </div>
 
         </section>
-
 
         <!-- INFO -->
         <section class="info-section" id="about">
@@ -464,42 +406,28 @@
 
                     <div>
                         <p class="section-label">HOW IT WORKS</p>
-
-                        <h2>
-                            Three simple steps.
-                        </h2>
-
+                        <h2>Three simple steps.</h2>
                         <p class="info-description">
                             No complicated menus. Just paste your link,
                             choose the available media, and download.
                         </p>
                     </div>
 
-
                     <div class="steps">
 
                         <div class="step">
                             <span>01</span>
-                            <div>
-                                <h3>Paste your link</h3>
-                                <p>Copy a supported media URL.</p>
-                            </div>
+                            <div><h3>Paste your link</h3><p>Copy a supported media URL.</p></div>
                         </div>
 
                         <div class="step">
                             <span>02</span>
-                            <div>
-                                <h3>Process</h3>
-                                <p>We'll find the available media.</p>
-                            </div>
+                            <div><h3>Process</h3><p>We'll find the available media.</p></div>
                         </div>
 
                         <div class="step">
                             <span>03</span>
-                            <div>
-                                <h3>Download</h3>
-                                <p>Choose the result you want.</p>
-                            </div>
+                            <div><h3>Download</h3><p>Choose the result you want.</p></div>
                         </div>
 
                     </div>
@@ -513,32 +441,8 @@
     </main>
 
 
-    <!-- FOOTER -->
-    <footer class="footer">
-
-        <div class="container footer-content">
-
-            <div>
-                <div class="logo footer-logo">
-                    <span class="logo-icon">↓</span>
-                    <span>Nexora Tools</span>
-                </div>
-
-                <p>
-                    Simple media tools, all in one place.
-                </p>
-            </div>
-
-            <p class="copyright">
-                © 2026 Nexora Tools
-            </p>
-
-        </div>
-
-    </footer>
-
     <!-- ========================= -->
-    <!-- FAKE CHAT WA GENERATOR (baru)  -->
+    <!-- FAKE CHAT WA GENERATOR     -->
     <!-- ========================= -->
     <section class="fakechat-hero" id="fakechat">
 
@@ -610,88 +514,21 @@
 
                     </div>
 
-                    <button class="download-btn" id="fcAddMessageBtn" style="width:100%; margin-top:6px;">
+                    <label class="fc-checkbox-row">
+                        <input type="checkbox" id="fcMessageShowMenu">
+                        <span>Tampilkan menu (balas/salin/hapus) di pesan ini</span>
+                    </label>
+
+                    <button class="fc-add-btn" id="fcAddMessageBtn" type="button">
                         + Tambah Pesan
                     </button>
 
                     <div class="fc-message-list" id="fcMessageList"></div>
 
-                    <button class="download-btn" id="fcDownloadBtn" style="width:100%; margin-top:16px; background:#25D366;">
+                    <button class="fc-download-btn" id="fcDownloadBtn" type="button">
                         ⬇ Download Screenshot
                     </button>
 
                 </div>
 
-
-                <!-- PREVIEW IPHONE -->
-                <div class="fakechat-preview-wrap">
-
-                    <div class="iphone-frame" id="fcPreview">
-
-                        <!-- STATUS BAR IPHONE -->
-                        <div class="ios-status-bar">
-                            <span class="ios-time" id="fcPreviewTime">9:41</span>
-                            <div class="ios-status-icons">
-                                <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
-                                    <rect x="0" y="8" width="3" height="4" rx="0.5" fill="white"></rect>
-                                    <rect x="4.5" y="6" width="3" height="6" rx="0.5" fill="white"></rect>
-                                    <rect x="9" y="3" width="3" height="9" rx="0.5" fill="white"></rect>
-                                    <rect x="13.5" y="0" width="3" height="12" rx="0.5" fill="white"></rect>
-                                </svg>
-                                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
-                                    <path d="M8 10.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z" fill="white"></path>
-                                    <path d="M4.5 7.2a5 5 0 0 1 7 0" stroke="white" stroke-width="1.3" fill="none"></path>
-                                    <path d="M1.8 4.6a9 9 0 0 1 12.4 0" stroke="white" stroke-width="1.3" fill="none"></path>
-                                </svg>
-                                <div class="ios-battery" id="fcPreviewBattery">
-                                    <div class="ios-battery-body">
-                                        <div class="ios-battery-fill" id="fcBatteryFill" style="width:82%;"></div>
-                                    </div>
-                                    <div class="ios-battery-tip"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- WA HEADER -->
-                        <div class="wa-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                            <div class="wa-avatar" id="fcPreviewAvatar">M</div>
-                            <div class="wa-header-text">
-                                <div class="wa-header-name" id="fcPreviewName">Mama</div>
-                                <div class="wa-header-status" id="fcPreviewStatus">online</div>
-                            </div>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2"></rect></svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        </div>
-
-                        <!-- CHAT BODY -->
-                        <div class="wa-chat-body" id="fcPreviewChat">
-                            <div class="wa-bubble received">
-                                <span class="wa-bubble-text">Chat kamu bakal muncul di sini</span>
-                                <span class="wa-bubble-time">9:41</span>
-                            </div>
-                        </div>
-
-                        <!-- INPUT BAR (dekoratif) -->
-                        <div class="wa-input-bar">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8696a0" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                            <div class="wa-input-fake">Message</div>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8696a0" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v1a7 7 0 0 0 14 0v-1"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <script src="script.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="fakechat.js"></script> 
-</body>
-</html>
+                <!-- PREVIE
