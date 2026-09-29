@@ -1940,3 +1940,241 @@ main.reveal {
     .tm-email-display { font-size: 14px; }
     .tm-btn { min-width: 100%; }
 }
+/* ============================================================
+   EDIT TEKS FOTO - photoeditor.css
+   Semua class/ID diawali "pe-" supaya tidak bentrok dengan
+   style.css maupun tempmail.css / fitur lain.
+   ============================================================ */
+
+.pe-section {
+    --pe-panel: #171b2e;
+    --pe-field: rgba(16, 19, 33, 0.6);
+    --pe-border: #2a2f4a;
+    --pe-hover: #2c3260;
+    --pe-btn-bg: #232847;
+    --pe-accent: #6c5ce7;
+    --pe-accent-2: #00d2ff;
+    --pe-text: #eef0ff;
+    --pe-muted: #9aa0c3;
+    --pe-danger: #ff5c72;
+
+    display: none;
+    padding: 72px 0;
+    scroll-margin-top: 80px;
+}
+.pe-section.pe-open { display: block; }
+
+.pe-section * { box-sizing: border-box; }
+
+.pe-head { text-align: center; margin-bottom: 28px; }
+
+.pe-layout {
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 18px;
+    align-items: start;
+    color: var(--pe-text);
+}
+
+@media (max-width: 800px) {
+    .pe-layout { grid-template-columns: 1fr; }
+}
+
+/* ---------- Panel kiri (toolbar + properti) ---------- */
+.pe-panel {
+    background: var(--pe-panel);
+    border: 1px solid var(--pe-border);
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.pe-panel-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--pe-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin: 0 0 10px;
+}
+
+.pe-panel-title:not(:first-child) { margin-top: 18px; }
+
+.pe-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 12px;
+    border: 1px solid var(--pe-border);
+    border-radius: 10px;
+    background: var(--pe-btn-bg);
+    color: var(--pe-text);
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: background .2s, filter .2s;
+}
+.pe-btn:hover:not(:disabled) { background: var(--pe-hover); }
+.pe-btn:disabled { opacity: .45; cursor: not-allowed; }
+.pe-btn:last-child { margin-bottom: 0; }
+
+.pe-btn-accent {
+    background: linear-gradient(90deg, var(--pe-accent), var(--pe-accent-2));
+    border: none;
+    color: #fff;
+}
+.pe-btn-accent:hover:not(:disabled) { filter: brightness(1.08); }
+
+.pe-btn-danger {
+    background: rgba(255, 92, 114, .12);
+    border-color: rgba(255, 92, 114, .35);
+    color: var(--pe-danger);
+}
+.pe-btn-danger:hover:not(:disabled) { background: rgba(255, 92, 114, .2); }
+
+.pe-btn.pe-active {
+    outline: 2px solid var(--pe-accent-2);
+    outline-offset: -2px;
+}
+
+.pe-icon {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.pe-field { margin-bottom: 12px; }
+.pe-field:last-child { margin-bottom: 0; }
+
+.pe-field label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--pe-muted);
+    margin-bottom: 6px;
+}
+
+.pe-field textarea,
+.pe-field select {
+    width: 100%;
+    background: var(--pe-field);
+    border: 1px solid var(--pe-border);
+    border-radius: 8px;
+    color: var(--pe-text);
+    font-family: inherit;
+    font-size: 13px;
+    padding: 8px 10px;
+    resize: vertical;
+}
+
+.pe-field input[type="range"] { width: 100%; }
+
+.pe-field input[type="color"] {
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--pe-border);
+    border-radius: 8px;
+    background: var(--pe-field);
+    padding: 2px;
+    cursor: pointer;
+}
+
+.pe-checkline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--pe-muted);
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+.pe-checkline input { accent-color: var(--pe-accent); }
+
+.pe-empty {
+    font-size: 12.5px;
+    color: var(--pe-muted);
+    text-align: center;
+    padding: 10px 4px;
+}
+
+/* ---------- Kanvas ---------- */
+.pe-canvas-card {
+    background: var(--pe-panel);
+    border: 1px solid var(--pe-border);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-height: 320px;
+    justify-content: center;
+}
+
+.pe-canvas-wrap {
+    position: relative;
+    max-width: 100%;
+    line-height: 0;
+}
+
+#peCanvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    background:
+        linear-gradient(45deg, #20233a 25%, transparent 25%),
+        linear-gradient(-45deg, #20233a 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #20233a 75%),
+        linear-gradient(-45deg, transparent 75%, #20233a 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    touch-action: none;
+    cursor: default;
+    display: none;
+}
+#peCanvas.pe-has-image { display: block; }
+
+.pe-drop-msg {
+    color: var(--pe-muted);
+    font-size: 13.5px;
+    text-align: center;
+    padding: 30px 14px;
+}
+
+.pe-hint {
+    font-size: 11.5px;
+    color: var(--pe-muted);
+    text-align: center;
+    margin: 0;
+}
+
+.pe-toast {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: #232847;
+    border: 1px solid #2a2f4a;
+    color: #eef0ff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s, transform .25s;
+    z-index: 3000;
+    max-width: calc(100vw - 32px);
+    text-align: center;
+}
+.pe-toast.pe-show { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
